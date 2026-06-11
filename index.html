@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Pera with Jay | Budget Planner PH</title>
+<title>WEALTH CODE PH | Budget Planner</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   /* ── LIGHT MODE (default) ── */
   :root {
@@ -73,6 +74,15 @@
   .header-brand { font-family: 'Playfair Display',serif; font-size: 22px; color: var(--gold2); letter-spacing: 1px; }
   .header-sub   { font-size: 11px; color: #6a7a8a; margin-top: 2px; letter-spacing: 2px; text-transform: uppercase; }
   .year-label   { font-size: 14px; color: var(--gold); font-weight: 600; margin-top: 6px; letter-spacing: 1px; }
+  .year-input {
+    font-size: 14px; color: var(--gold); font-weight: 600; margin-top: 6px; letter-spacing: 1px;
+    background: transparent; border: none; border-bottom: 1.5px solid var(--gold);
+    text-align: center; width: 70px; font-family: 'DM Sans', sans-serif;
+    -moz-appearance: textfield; outline: none; padding: 2px 4px; cursor: pointer;
+  }
+  .year-input::-webkit-inner-spin-button,
+  .year-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  .year-input:focus { border-bottom-color: var(--gold2); }
   .save-ind     { font-size: 11px; color: #00e87a; margin-top: 4px; opacity: 0; transition: opacity 0.4s; letter-spacing: 1px; }
 
   /* ── DARK MODE TOGGLE ── */
@@ -143,8 +153,9 @@
 
   /* ── TOTALS ROW ── */
   .totals-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 0; border-top: 1.5px solid var(--row-border); margin-top: 4px; }
-  .totals-label { font-size: 14px; font-weight: 700; color: var(--text); }
-  .totals-value { font-size: 16px; font-weight: 700; font-family: 'Playfair Display',serif; color: var(--gold); }
+  .totals-label { font-size: 17px; font-weight: 800; color: var(--text); }
+  .totals-value { font-size: 20px; font-weight: 800; font-family: 'Playfair Display',serif; color: #a07820; }
+  body.dark .totals-value { color: #c9921a; }
 
   /* ── SUMMARY BANNER ── */
   .summary-banner {
@@ -153,8 +164,8 @@
     border-radius: var(--radius); padding: 16px;
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; text-align: center;
   }
-  .sum-label { font-size: 10px; color: rgba(11,31,58,0.7); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-  .sum-value { font-family: 'Playfair Display',serif; font-size: 15px; color: #0b1f3a; font-weight: 700; margin-top: 2px; word-break: break-all; }
+  .sum-label { font-size: 14px; color: rgba(11,31,58,0.7); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+  .sum-value { font-family: 'Playfair Display',serif; font-size: 20px; color: #0b1f3a; font-weight: 700; margin-top: 2px; word-break: break-all; }
   .sum-value.negative { color: #7a0000; }
   .sum-value.positive { color: #003a10; }
 
@@ -171,7 +182,7 @@
   .jar-name   { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }
   .jar-pct    { font-size: 22px; font-family: 'Playfair Display',serif; font-weight: 900; margin: 4px 0 2px; }
   .jar-amount { font-size: 13px; font-weight: 600; opacity: 0.95; }
-  .jar-desc   { font-size: 10px; opacity: 0.7; margin-top: 3px; }
+  .jar-desc   { font-size: 14px; opacity: 0.7; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
   /* Pastel glass jar cards */
   .jar-card {
     backdrop-filter: blur(12px);
@@ -237,15 +248,83 @@
   .yr-table .month-name { text-align:left; font-weight:600; color:var(--gold); }
   .yr-table .positive { color:#00c060; font-weight:700; }
   .yr-table .negative { color:#ff6060; font-weight:700; }
-  .yr-table .total-row td { background:rgba(201,168,76,0.15); font-weight:700; color:var(--gold2); border-top:2px solid var(--gold); font-size:14px; }
+  .yr-table .total-row td { background:rgba(201,168,76,0.15); font-weight:800; color:#a07820; border-top:2px solid var(--gold); font-size:18px; }
+  body.dark .yr-table .total-row td { color:#c9921a; }
 
   /* ── FOOTER ── */
   .footer { text-align:center; margin-top:28px; padding:0 16px; font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; line-height:1.8; }
   .footer strong { color:var(--gold); }
+  .ask-btn-wrap { text-align:center; margin: 20px 16px 32px; }
+  .ask-btn {
+    display: inline-block;
+    background: #0b1f3a;
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 36px;
+    border-radius: 50px;
+    border: 2px solid #1a3a6a;
+    box-shadow: 0 4px 18px rgba(11,31,58,0.25);
+    transition: all 0.25s;
+  }
+  .ask-btn:hover { background: #112244; box-shadow: 0 6px 24px rgba(11,31,58,0.4); transform: translateY(-2px); }
+  .ask-btn:active { transform: translateY(0); }
+  body.dark .ask-btn { background: #0d2a50; border-color: #1e4a8a; box-shadow: 0 4px 18px rgba(0,0,0,0.4); }
+  body.dark .ask-btn:hover { background: #1a3a6a; }
 
   .month-panel { display: none; }
   .month-panel.active { display: block; }
   .yearly-view { display: none; }
+
+  /* ── CHART SECTION ── */
+  .chart-toggle-wrap {
+    display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .chart-type-btn {
+    flex: 1; min-width: 80px; padding: 9px 10px;
+    border: 1.5px solid var(--input-border);
+    background: var(--toggle-bg); color: var(--muted);
+    font-family: 'DM Sans',sans-serif; font-size: 13px; font-weight: 600;
+    border-radius: 20px; cursor: pointer; transition: all 0.2s;
+    text-align: center;
+  }
+  .chart-type-btn.active { background: var(--gold); color: #0b1f3a; border-color: var(--gold); }
+  .chart-dataset-wrap {
+    display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .chart-ds-btn {
+    padding: 7px 14px; border-radius: 16px; border: 1.5px solid var(--input-border);
+    background: var(--toggle-bg); color: var(--muted);
+    font-family: 'DM Sans',sans-serif; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .chart-ds-btn.active-income  { background: rgba(99,162,235,0.25); color: #1e6ab0; border-color: #6fa8e0; }
+  .chart-ds-btn.active-expense { background: rgba(239,100,100,0.25); color: #b03030; border-color: #e06060; }
+  .chart-ds-btn.active-net     { background: rgba(74,200,120,0.25); color: #0a6a35; border-color: #4ac878; }
+  body.dark .chart-ds-btn.active-income  { color:#a8d4ff; border-color:#4a8ac8; }
+  body.dark .chart-ds-btn.active-expense { color:#fca5a5; border-color:#c86060; }
+  body.dark .chart-ds-btn.active-net     { color:#7de8aa; border-color:#3ac870; }
+  .chart-container {
+    position: relative; width: 100%; height: 260px;
+  }
+  .chart-insights {
+    margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .insight-card {
+    border-radius: 12px; padding: 12px; border: 1px solid var(--card-border);
+    background: var(--input-bg);
+  }
+  .insight-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-weight: 700; }
+  .insight-month { font-size: 15px; font-family: 'Playfair Display',serif; font-weight: 700; margin: 3px 0 1px; }
+  .insight-value { font-size: 12px; font-weight: 600; }
+  .insight-card.best  .insight-month { color: #16a34a; }
+  .insight-card.best  .insight-value { color: #16a34a; }
+  .insight-card.worst .insight-month { color: #dc2626; }
+  .insight-card.worst .insight-value { color: #dc2626; }
 
   /* ── NECESSITIES NOTE ── */
   .nec-note {
@@ -296,9 +375,9 @@
     <span class="dm-label" id="dm-label">☀️</span>
     <button class="dm-switch" onclick="toggleDark()" aria-label="Toggle dark mode"></button>
   </div>
-  <div class="header-brand">💰 Pera with Jay</div>
-  <div class="header-sub">Filipino Budget Planner · SM Jaymar Castro, CPA · FA</div>
-  <div class="year-label" id="year-display"></div>
+  <div class="header-brand">💰 WEALTH CODE PH</div>
+  <div class="header-sub">Filipino Budget Planner · Jaymar Castro, CPA · FA</div>
+  <input class="year-input" id="year-display" type="number" value="" min="2000" max="2099" aria-label="Year">
   <div class="save-ind" id="save-indicator">✓ Auto-saved</div>
 </div>
 
@@ -330,8 +409,33 @@
       </div>
     </div>
   </div>
+  <!-- CHART SECTION -->
   <div class="section" style="margin-top:20px;">
-    <div class="section-title"><span>🫙</span> Annual Jar Allocation</div>
+    <div class="section-title"><span>📈</span> Income & Expense Chart</div>
+    <div class="card">
+      <!-- Chart Type Toggle -->
+      <div class="chart-toggle-wrap">
+        <button class="chart-type-btn active" onclick="setChartType('bar',this)">📊 Bar</button>
+        <button class="chart-type-btn" onclick="setChartType('pie',this)">🥧 Pie</button>
+        <button class="chart-type-btn" onclick="setChartType('line',this)">📉 Line</button>
+      </div>
+      <!-- Dataset Toggle -->
+      <div class="chart-dataset-wrap">
+        <button class="chart-ds-btn active-income" id="ds-income" onclick="toggleDataset('income')">💙 Income</button>
+        <button class="chart-ds-btn active-expense" id="ds-expense" onclick="toggleDataset('expense')">❤️ Expenses</button>
+        <button class="chart-ds-btn active-net" id="ds-net" onclick="toggleDataset('net')">💚 Net</button>
+      </div>
+      <!-- Canvas -->
+      <div class="chart-container">
+        <canvas id="yr-chart"></canvas>
+      </div>
+      <!-- Insights -->
+      <div class="chart-insights" id="chart-insights"></div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top:20px;">
+    <div class="section-title"><span>🫙</span> Annual Money Jar Allocation</div>
     <div style="font-size:13px; color:var(--muted); margin-bottom:10px;">Based on total yearly gross income across all months.</div>
     <div class="jar-grid">
       <div class="jar-card jar-expenses jar-full">
@@ -371,9 +475,11 @@
 
 <!-- FOOTER -->
 <div class="footer">
-  <div>Great Golden Eagle Intellectual Property</div>
-  <div><strong>SM Jaymar Castro</strong> · CPA · Financial Advisor · Sun Life</div>
-  <div style="font-size:10px;">Free tool by <strong>Pera with Jay</strong> · For educational use only</div>
+  <div><strong>INTELLECTUAL PROPERTY OF JAYMAR CASTRO — CPA — FINANCIAL ADVISOR — SUN LIFE</strong><br>FREE TOOL · FOR EDUCATION PURPOSES ONLY</div>
+</div>
+
+<div class="ask-btn-wrap">
+  <a class="ask-btn" href="https://www.facebook.com/jaymar.castro" target="_blank" rel="noopener noreferrer">💬 ASK JAYMAR TODAY</a>
 </div>
 
 <script>
@@ -381,10 +487,11 @@
 function toggleDark() {
   const isDark = document.body.classList.toggle('dark');
   document.getElementById('dm-label').textContent = isDark ? '🌙' : '☀️';
-  localStorage.setItem('pera_jay_darkmode', isDark ? '1' : '0');
+  localStorage.setItem('wealth_code_darkmode', isDark ? '1' : '0');
+  if (window._chartData) renderChart();
 }
 // Restore dark mode preference
-if (localStorage.getItem('pera_jay_darkmode') === '1') {
+if (localStorage.getItem('wealth_code_darkmode') === '1') {
   document.body.classList.add('dark');
   document.addEventListener('DOMContentLoaded', () => {
     const lbl = document.getElementById('dm-label');
@@ -394,7 +501,7 @@ if (localStorage.getItem('pera_jay_darkmode') === '1') {
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const INCOME_FIELDS = [
-  {id:'inc_commission', label:'Commission Income', sub:'Sun Life / Sales'},
+  {id:'inc_commission', label:'Commission Income', sub:'Sales'},
   {id:'inc_salary',     label:'Basic Salary',      sub:'Employment / Part-time'},
   {id:'inc_business',   label:'Business Income',   sub:'Negosyo / Sideline'},
   {id:'inc_ofw',        label:'OFW Remittance',    sub:'From abroad'},
@@ -421,7 +528,7 @@ const currentMonth = new Date().getMonth(); // 0-indexed
 let activeMonth = currentMonth;
 let customCounts = Array(12).fill(null).map(() => ({income:0, expense:0}));
 
-document.getElementById('year-display').textContent = currentYear;
+document.getElementById('year-display').value = currentYear;
 
 // Build month tabs
 const tabsEl = document.getElementById('month-tabs');
@@ -500,7 +607,7 @@ function buildPanelHTML(mi) {
   </div>
 
   <div class="section" style="margin-top:16px;">
-    <div class="section-title"><span>🫙</span> ${m} Jar Allocation</div>
+    <div class="section-title"><span>🫙</span> ${m} Money Jar Allocation</div>
     <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">Based on your gross income for ${m}.</div>
     <div class="jar-grid">
       <div class="jar-card jar-expenses jar-full">
@@ -539,7 +646,7 @@ function buildPanelHTML(mi) {
 }
 
 // ── STORAGE KEY ─────────────────────────────────────────────
-const STORE_KEY = `pera_jay_${currentYear}`;
+const STORE_KEY = `wealth_code_${currentYear}`;
 
 function saveAll() {
   const data = {};
@@ -638,7 +745,7 @@ function setView(v, btn) {
     document.getElementById('yearly-view').style.display = 'none';
   } else {
     document.getElementById('monthly-view').style.display = 'none';
-    document.getElementById('yearly-view').style.display = '';
+    document.getElementById('yearly-view').style.display = 'block';
     buildYearlySummary();
   }
 }
@@ -771,6 +878,158 @@ function buildYearlySummary() {
     else prog = totInc > 0 ? 100 : 0;
     document.getElementById(`yr-prog-${j.key}`).style.width = prog + '%';
   });
+
+  // Build chart data arrays
+  window._chartData = { labels: [], income: [], expense: [], net: [] };
+  MONTHS.forEach((m, i) => {
+    const inc = getMonthIncome(i);
+    const exp = getMonthExpense(i);
+    window._chartData.labels.push(m.slice(0,3));
+    window._chartData.income.push(inc);
+    window._chartData.expense.push(exp);
+    window._chartData.net.push(inc - exp);
+  });
+  renderChart();
+  renderInsights();
+}
+
+// ── CHART ENGINE ──────────────────────────────────────────────
+let _chartInstance = null;
+let _chartType = 'bar';
+let _dsVisible = { income: true, expense: true, net: true };
+
+function setChartType(type, btn) {
+  _chartType = type;
+  document.querySelectorAll('.chart-type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderChart();
+}
+
+function toggleDataset(ds) {
+  _dsVisible[ds] = !_dsVisible[ds];
+  const btn = document.getElementById('ds-' + ds);
+  const cls = { income: 'active-income', expense: 'active-expense', net: 'active-net' };
+  if (_dsVisible[ds]) btn.classList.add(cls[ds]);
+  else btn.classList.remove(cls[ds]);
+  renderChart();
+}
+
+function isDark() { return document.body.classList.contains('dark'); }
+
+function renderChart() {
+  const d = window._chartData;
+  if (!d) return;
+  const ctx = document.getElementById('yr-chart');
+  if (!ctx) return;
+  if (_chartInstance) { _chartInstance.destroy(); _chartInstance = null; }
+
+  const textColor = isDark() ? '#a0b4c8' : '#3a4a5a';
+  const gridColor = isDark() ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+  const incColor   = isDark() ? 'rgba(147,197,253,0.85)' : 'rgba(59,130,246,0.80)';
+  const expColor   = isDark() ? 'rgba(252,165,165,0.85)' : 'rgba(239,68,68,0.75)';
+  const netColorFn = (vals) => vals.map(v => v >= 0
+    ? (isDark() ? 'rgba(134,239,172,0.85)' : 'rgba(22,163,74,0.80)')
+    : (isDark() ? 'rgba(252,165,165,0.85)' : 'rgba(239,68,68,0.75)'));
+
+  // Build datasets
+  const datasets = [];
+  if (_dsVisible.income)  datasets.push({ label: 'Income',   data: d.income,  backgroundColor: incColor, borderColor: isDark()?'#93c5fd':'#3b82f6', borderWidth: _chartType==='line'?2:0, fill: false, tension: 0.4, pointRadius: 4 });
+  if (_dsVisible.expense) datasets.push({ label: 'Expenses', data: d.expense, backgroundColor: expColor, borderColor: isDark()?'#fca5a5':'#ef4444', borderWidth: _chartType==='line'?2:0, fill: false, tension: 0.4, pointRadius: 4 });
+  if (_dsVisible.net)     datasets.push({ label: 'Net',      data: d.net,     backgroundColor: netColorFn(d.net), borderColor: isDark()?'#86efac':'#16a34a', borderWidth: _chartType==='line'?2:0, fill: false, tension: 0.4, pointRadius: 4 });
+
+  // Pie: combine into one dataset summing active series
+  let type = _chartType;
+  let finalDatasets = datasets;
+  let finalLabels = d.labels;
+
+  if (type === 'pie') {
+    // One slice per active dataset, summed across months
+    const pieLabels = [];
+    const pieData = [];
+    const pieColors = [];
+    if (_dsVisible.income)  { pieLabels.push('Income');   pieData.push(d.income.reduce((a,b)=>a+b,0));   pieColors.push(isDark()?'rgba(147,197,253,0.85)':'rgba(59,130,246,0.80)'); }
+    if (_dsVisible.expense) { pieLabels.push('Expenses'); pieData.push(d.expense.reduce((a,b)=>a+b,0));  pieColors.push(isDark()?'rgba(252,165,165,0.85)':'rgba(239,68,68,0.75)'); }
+    if (_dsVisible.net) {
+      const netSum = d.net.reduce((a,b)=>a+b,0);
+      pieLabels.push('Net'); pieData.push(Math.abs(netSum));
+      pieColors.push(netSum>=0 ? (isDark()?'rgba(134,239,172,0.85)':'rgba(22,163,74,0.80)') : (isDark()?'rgba(252,165,165,0.7)':'rgba(239,68,68,0.6)'));
+    }
+    finalLabels = pieLabels;
+    finalDatasets = [{ data: pieData, backgroundColor: pieColors, borderWidth: 2, borderColor: isDark()?'#111827':'#fff' }];
+  }
+
+  _chartInstance = new Chart(ctx, {
+    type: type === 'pie' ? 'doughnut' : type,
+    data: { labels: finalLabels, datasets: finalDatasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: type==='pie', labels: { color: textColor, font: { family: 'DM Sans', size: 12 }, padding: 14 } },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              const v = ctx.parsed.y ?? ctx.parsed;
+              const num = typeof v === 'number' ? v : ctx.raw;
+              return ' ₱' + Math.abs(num).toLocaleString('en-PH',{maximumFractionDigits:0});
+            }
+          }
+        }
+      },
+      scales: type === 'pie' ? {} : {
+        x: { ticks: { color: textColor, font: { size: 11 } }, grid: { color: gridColor } },
+        y: {
+          ticks: {
+            color: textColor, font: { size: 11 },
+            callback: v => '₱' + (Math.abs(v)>=1000 ? (Math.abs(v)/1000).toFixed(0)+'k' : v)
+          },
+          grid: { color: gridColor }
+        }
+      }
+    }
+  });
+}
+
+function renderInsights() {
+  const d = window._chartData;
+  if (!d) return;
+  const el = document.getElementById('chart-insights');
+  if (!el) return;
+
+  const active = d.income.filter(v => v > 0);
+  if (active.length === 0) { el.innerHTML = ''; return; }
+
+  // Highest/Lowest Net
+  const nets = d.net;
+  let maxNetIdx = 0, minNetIdx = 0;
+  nets.forEach((v,i) => { if(v > nets[maxNetIdx]) maxNetIdx=i; if(v < nets[minNetIdx]) minNetIdx=i; });
+
+  // Highest/Lowest Expense
+  const exps = d.expense;
+  let maxExpIdx = 0, minExpIdx = 0;
+  exps.forEach((v,i) => { if(v > exps[maxExpIdx]) maxExpIdx=i; if(v < exps[minExpIdx] && exps[i]>0) minExpIdx=i; });
+
+  el.innerHTML = `
+    <div class="insight-card best">
+      <div class="insight-label">🏆 Best Month</div>
+      <div class="insight-month">${MONTHS[maxNetIdx]}</div>
+      <div class="insight-value">Net: ${fmt(nets[maxNetIdx])}</div>
+    </div>
+    <div class="insight-card worst">
+      <div class="insight-label">⚠️ Tightest Month</div>
+      <div class="insight-month">${MONTHS[minNetIdx]}</div>
+      <div class="insight-value">Net: ${fmt(nets[minNetIdx])}</div>
+    </div>
+    <div class="insight-card worst">
+      <div class="insight-label">📤 Highest Expense</div>
+      <div class="insight-month">${MONTHS[maxExpIdx]}</div>
+      <div class="insight-value">${fmt(exps[maxExpIdx])}</div>
+    </div>
+    <div class="insight-card best">
+      <div class="insight-label">💰 Lowest Expense</div>
+      <div class="insight-month">${MONTHS[minExpIdx]}</div>
+      <div class="insight-value">${fmt(exps[minExpIdx])}</div>
+    </div>`;
 }
 
 function addCustomRow(mi, type) {
