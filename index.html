@@ -3,8 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>WEALTH CODE PH | Budget Planner</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Wealth Code PH | Budget Planner PH</title>
+
+  <!-- PWA / Home Screen Settings -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Budget PH">
+  <meta name="theme-color" content="#0b1f3a">
+  <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMGIxZjNhO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMxYTNhNmE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICA8cmVjdCB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgcng9IjQwIiBmaWxsPSJ1cmwoI2dyYWQpIi8+CiAgPHRleHQgeD0iOTAiIHk9IjEwMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjcyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjYzlhODRjIj7wn5KwPC90ZXh0PgogIDx0ZXh0IHg9IjkwIiB5PSIxNDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNjOWE4NGMiIGxldHRlci1zcGFjaW5nPSIxIj5XRUFMVEg8L3RleHQ+Cjwvc3ZnPg==">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   /* ── LIGHT MODE (default) ── */
@@ -74,15 +81,6 @@
   .header-brand { font-family: 'Playfair Display',serif; font-size: 22px; color: var(--gold2); letter-spacing: 1px; }
   .header-sub   { font-size: 11px; color: #6a7a8a; margin-top: 2px; letter-spacing: 2px; text-transform: uppercase; }
   .year-label   { font-size: 14px; color: var(--gold); font-weight: 600; margin-top: 6px; letter-spacing: 1px; }
-  .year-input {
-    font-size: 14px; color: var(--gold); font-weight: 600; margin-top: 6px; letter-spacing: 1px;
-    background: transparent; border: none; border-bottom: 1.5px solid var(--gold);
-    text-align: center; width: 70px; font-family: 'DM Sans', sans-serif;
-    -moz-appearance: textfield; outline: none; padding: 2px 4px; cursor: pointer;
-  }
-  .year-input::-webkit-inner-spin-button,
-  .year-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-  .year-input:focus { border-bottom-color: var(--gold2); }
   .save-ind     { font-size: 11px; color: #00e87a; margin-top: 4px; opacity: 0; transition: opacity 0.4s; letter-spacing: 1px; }
 
   /* ── DARK MODE TOGGLE ── */
@@ -153,9 +151,8 @@
 
   /* ── TOTALS ROW ── */
   .totals-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0 0; border-top: 1.5px solid var(--row-border); margin-top: 4px; }
-  .totals-label { font-size: 17px; font-weight: 800; color: var(--text); }
-  .totals-value { font-size: 20px; font-weight: 800; font-family: 'Playfair Display',serif; color: #a07820; }
-  body.dark .totals-value { color: #c9921a; }
+  .totals-label { font-size: 14px; font-weight: 700; color: var(--text); }
+  .totals-value { font-size: 16px; font-weight: 700; font-family: 'Playfair Display',serif; color: var(--gold); }
 
   /* ── SUMMARY BANNER ── */
   .summary-banner {
@@ -164,8 +161,8 @@
     border-radius: var(--radius); padding: 16px;
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; text-align: center;
   }
-  .sum-label { font-size: 14px; color: rgba(11,31,58,0.7); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-  .sum-value { font-family: 'Playfair Display',serif; font-size: 20px; color: #0b1f3a; font-weight: 700; margin-top: 2px; word-break: break-all; }
+  .sum-label { font-size: 10px; color: rgba(11,31,58,0.7); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+  .sum-value { font-family: 'Playfair Display',serif; font-size: 15px; color: #0b1f3a; font-weight: 700; margin-top: 2px; word-break: break-all; }
   .sum-value.negative { color: #7a0000; }
   .sum-value.positive { color: #003a10; }
 
@@ -182,7 +179,7 @@
   .jar-name   { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }
   .jar-pct    { font-size: 22px; font-family: 'Playfair Display',serif; font-weight: 900; margin: 4px 0 2px; }
   .jar-amount { font-size: 13px; font-weight: 600; opacity: 0.95; }
-  .jar-desc   { font-size: 14px; opacity: 0.7; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  .jar-desc   { font-size: 10px; opacity: 0.7; margin-top: 3px; }
   /* Pastel glass jar cards */
   .jar-card {
     backdrop-filter: blur(12px);
@@ -248,33 +245,11 @@
   .yr-table .month-name { text-align:left; font-weight:600; color:var(--gold); }
   .yr-table .positive { color:#00c060; font-weight:700; }
   .yr-table .negative { color:#ff6060; font-weight:700; }
-  .yr-table .total-row td { background:rgba(201,168,76,0.15); font-weight:800; color:#a07820; border-top:2px solid var(--gold); font-size:18px; }
-  body.dark .yr-table .total-row td { color:#c9921a; }
+  .yr-table .total-row td { background:rgba(201,168,76,0.15); font-weight:700; color:var(--gold2); border-top:2px solid var(--gold); font-size:14px; }
 
   /* ── FOOTER ── */
   .footer { text-align:center; margin-top:28px; padding:0 16px; font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; line-height:1.8; }
   .footer strong { color:var(--gold); }
-  .ask-btn-wrap { text-align:center; margin: 20px 16px 32px; }
-  .ask-btn {
-    display: inline-block;
-    background: #0b1f3a;
-    color: #ffffff;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 16px 36px;
-    border-radius: 50px;
-    border: 2px solid #1a3a6a;
-    box-shadow: 0 4px 18px rgba(11,31,58,0.25);
-    transition: all 0.25s;
-  }
-  .ask-btn:hover { background: #112244; box-shadow: 0 6px 24px rgba(11,31,58,0.4); transform: translateY(-2px); }
-  .ask-btn:active { transform: translateY(0); }
-  body.dark .ask-btn { background: #0d2a50; border-color: #1e4a8a; box-shadow: 0 4px 18px rgba(0,0,0,0.4); }
-  body.dark .ask-btn:hover { background: #1a3a6a; }
 
   .month-panel { display: none; }
   .month-panel.active { display: block; }
@@ -366,6 +341,178 @@
   body.dark .nec-note.equal { background: linear-gradient(135deg,rgba(250,204,21,0.15),rgba(113,63,18,0.25)); color:#fdd97a; border-color:rgba(250,204,21,0.3); }
   body.dark .nec-note.above { background: linear-gradient(135deg,rgba(239,68,68,0.18),rgba(127,29,29,0.25)); color:#fca5a5; border-color:rgba(239,68,68,0.3); }
 </style>
+
+<script>
+// Generate dark navy PNG icon dynamically for home screen
+(function(){
+  try {
+    var c = document.createElement('canvas');
+    c.width = 180; c.height = 180;
+    var ctx = c.getContext('2d');
+    // Background gradient
+    var g = ctx.createLinearGradient(0,0,180,180);
+    g.addColorStop(0,'#0b1f3a');
+    g.addColorStop(1,'#1a3a6a');
+    ctx.fillStyle = g;
+    // Rounded rect
+    ctx.beginPath();
+    ctx.moveTo(40,0); ctx.lineTo(140,0);
+    ctx.quadraticCurveTo(180,0,180,40);
+    ctx.lineTo(180,140);
+    ctx.quadraticCurveTo(180,180,140,180);
+    ctx.lineTo(40,180);
+    ctx.quadraticCurveTo(0,180,0,140);
+    ctx.lineTo(0,40);
+    ctx.quadraticCurveTo(0,0,40,0);
+    ctx.closePath();
+    ctx.fill();
+    // Gold circle
+    ctx.beginPath();
+    ctx.arc(90,78,38,0,Math.PI*2);
+    ctx.fillStyle='rgba(201,168,76,0.15)';
+    ctx.fill();
+    // Shield icon text
+    ctx.font='56px serif';
+    ctx.textAlign='center';
+    ctx.fillText('💰',90,98);
+    // Gold text
+    ctx.fillStyle='#c9a84c';
+    ctx.font='bold 14px Arial';
+    ctx.letterSpacing='2px';
+    ctx.fillText('WEALTH CODE PH',90,140);
+    // Set as icon
+    var link = document.querySelector("link[rel='apple-touch-icon']");
+    if(!link){ link=document.createElement('link'); link.rel='apple-touch-icon'; document.head.appendChild(link); }
+    link.href = c.toDataURL('image/png');
+  } catch(e){}
+})();
+</script>
+
+<script id="icon-gen">
+(function(){
+  try {
+    var c = document.createElement('canvas');
+    c.width = 180; c.height = 180;
+    var ctx = c.getContext('2d');
+
+    // White background
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.moveTo(40,0); ctx.lineTo(140,0);
+    ctx.quadraticCurveTo(180,0,180,40);
+    ctx.lineTo(180,140);
+    ctx.quadraticCurveTo(180,180,140,180);
+    ctx.lineTo(40,180);
+    ctx.quadraticCurveTo(0,180,0,140);
+    ctx.lineTo(0,40);
+    ctx.quadraticCurveTo(0,0,40,0);
+    ctx.closePath();
+    ctx.fill();
+
+    // ── SHIELD ──
+    ctx.save();
+    ctx.translate(90, 82);
+    ctx.scale(1.1, 1.1);
+    ctx.beginPath();
+    // Shield path
+    ctx.moveTo(0,-52);
+    ctx.lineTo(38,-38);
+    ctx.lineTo(42,-10);
+    ctx.quadraticCurveTo(42,22,0,46);
+    ctx.quadraticCurveTo(-42,22,-42,-10);
+    ctx.lineTo(-38,-38);
+    ctx.closePath();
+    ctx.strokeStyle = '#1a2f5a';
+    ctx.lineWidth = 7;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    ctx.restore();
+
+    // ── BAR CHART inside shield ──
+    var bars = [
+      {x:58, h:22, color:'#4caf82'},
+      {x:72, h:32, color:'#3d9e6e'},
+      {x:86, h:42, color:'#2e8a5a'},
+      {x:100,h:30, color:'#4caf82'},
+    ];
+    bars.forEach(function(b){
+      ctx.fillStyle = b.color;
+      ctx.beginPath();
+      ctx.roundRect(b.x, 108-b.h, 10, b.h, 2);
+      ctx.fill();
+    });
+
+    // ── ORANGE ARROW LINE ──
+    ctx.strokeStyle = '#f5a623';
+    ctx.lineWidth = 4.5;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(52, 100);
+    ctx.lineTo(72, 82);
+    ctx.lineTo(90, 92);
+    ctx.lineTo(118, 58);
+    ctx.stroke();
+
+    // Arrow head
+    ctx.fillStyle = '#f5a623';
+    ctx.beginPath();
+    ctx.moveTo(118, 58);
+    ctx.lineTo(108, 60);
+    ctx.lineTo(116, 70);
+    ctx.closePath();
+    ctx.fill();
+
+    // ── GREEN LEAF (top) ──
+    ctx.fillStyle = '#4caf82';
+    // Left leaf
+    ctx.beginPath();
+    ctx.moveTo(90, 28);
+    ctx.quadraticCurveTo(76, 22, 78, 36);
+    ctx.quadraticCurveTo(84, 30, 90, 34);
+    ctx.closePath();
+    ctx.fill();
+    // Right leaf
+    ctx.beginPath();
+    ctx.moveTo(90, 28);
+    ctx.quadraticCurveTo(104, 22, 102, 36);
+    ctx.quadraticCurveTo(96, 30, 90, 34);
+    ctx.closePath();
+    ctx.fillStyle = '#3d9e6e';
+    ctx.fill();
+    // Stem
+    ctx.strokeStyle = '#2e8a5a';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(90, 46);
+    ctx.lineTo(90, 30);
+    ctx.stroke();
+
+    // ── BOTTOM TEXT ──
+    ctx.fillStyle = '#1a2f5a';
+    ctx.font = 'bold 14px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('BUDGET', 90, 140);
+    ctx.font = '11px Arial';
+    ctx.fillStyle = '#f5a623';
+    ctx.fillText('TRACKER', 90, 155);
+    ctx.font = '9px Arial';
+    ctx.fillStyle = '#888';
+    ctx.fillText('Wealth Code PH', 90, 170);
+
+    // Set icon
+    var link = document.querySelector("link[rel='apple-touch-icon']");
+    if(!link){ link=document.createElement('link'); link.rel='apple-touch-icon'; document.head.appendChild(link); }
+    link.href = c.toDataURL('image/png');
+
+    // Also update favicon
+    var fav = document.querySelector("link[rel='icon']");
+    if(!fav){ fav=document.createElement('link'); fav.rel='icon'; document.head.appendChild(fav); }
+    fav.href = c.toDataURL('image/png');
+
+  } catch(e){ console.log('Icon gen error:',e); }
+})();
+</script>
 </head>
 <body>
 
@@ -375,9 +522,9 @@
     <span class="dm-label" id="dm-label">☀️</span>
     <button class="dm-switch" onclick="toggleDark()" aria-label="Toggle dark mode"></button>
   </div>
-  <div class="header-brand">💰 WEALTH CODE PH</div>
+  <div class="header-brand">💰 Wealth Code PH</div>
   <div class="header-sub">Filipino Budget Planner · Jaymar Castro, CPA · FA</div>
-  <input class="year-input" id="year-display" type="number" value="" min="2000" max="2099" aria-label="Year">
+  <div class="year-label" id="year-display"></div>
   <div class="save-ind" id="save-indicator">✓ Auto-saved</div>
 </div>
 
@@ -435,7 +582,7 @@
   </div>
 
   <div class="section" style="margin-top:20px;">
-    <div class="section-title"><span>🫙</span> Annual Money Jar Allocation</div>
+    <div class="section-title"><span>🫙</span> Annual Jar Allocation</div>
     <div style="font-size:13px; color:var(--muted); margin-bottom:10px;">Based on total yearly gross income across all months.</div>
     <div class="jar-grid">
       <div class="jar-card jar-expenses jar-full">
@@ -475,11 +622,9 @@
 
 <!-- FOOTER -->
 <div class="footer">
-  <div><strong>INTELLECTUAL PROPERTY OF JAYMAR CASTRO — CPA — FINANCIAL ADVISOR — SUN LIFE</strong><br>FREE TOOL · FOR EDUCATION PURPOSES ONLY</div>
-</div>
-
-<div class="ask-btn-wrap">
-  <a class="ask-btn" href="https://www.facebook.com/jaymar.castro" target="_blank" rel="noopener noreferrer">💬 ASK JAYMAR TODAY</a>
+  <div>Wealth Code PH</div>
+  <div><strong>Jaymar Castro</strong> · CPA · Financial Advisor · Sun Life</div>
+  <div style="font-size:10px;">Free tool by <strong>Wealth Code PH</strong> · For educational use only</div>
 </div>
 
 <script>
@@ -487,11 +632,11 @@
 function toggleDark() {
   const isDark = document.body.classList.toggle('dark');
   document.getElementById('dm-label').textContent = isDark ? '🌙' : '☀️';
-  localStorage.setItem('wealth_code_darkmode', isDark ? '1' : '0');
+  localStorage.setItem('wealthcode_darkmode', isDark ? '1' : '0');
   if (window._chartData) renderChart();
 }
 // Restore dark mode preference
-if (localStorage.getItem('wealth_code_darkmode') === '1') {
+if (localStorage.getItem('wealthcode_darkmode') === '1') {
   document.body.classList.add('dark');
   document.addEventListener('DOMContentLoaded', () => {
     const lbl = document.getElementById('dm-label');
@@ -501,7 +646,7 @@ if (localStorage.getItem('wealth_code_darkmode') === '1') {
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const INCOME_FIELDS = [
-  {id:'inc_commission', label:'Commission Income', sub:'Sales'},
+  {id:'inc_commission', label:'Commission Income', sub:'Sun Life / Sales'},
   {id:'inc_salary',     label:'Basic Salary',      sub:'Employment / Part-time'},
   {id:'inc_business',   label:'Business Income',   sub:'Negosyo / Sideline'},
   {id:'inc_ofw',        label:'OFW Remittance',    sub:'From abroad'},
@@ -528,7 +673,7 @@ const currentMonth = new Date().getMonth(); // 0-indexed
 let activeMonth = currentMonth;
 let customCounts = Array(12).fill(null).map(() => ({income:0, expense:0}));
 
-document.getElementById('year-display').value = currentYear;
+document.getElementById('year-display').textContent = currentYear;
 
 // Build month tabs
 const tabsEl = document.getElementById('month-tabs');
@@ -607,7 +752,7 @@ function buildPanelHTML(mi) {
   </div>
 
   <div class="section" style="margin-top:16px;">
-    <div class="section-title"><span>🫙</span> ${m} Money Jar Allocation</div>
+    <div class="section-title"><span>🫙</span> ${m} Jar Allocation</div>
     <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">Based on your gross income for ${m}.</div>
     <div class="jar-grid">
       <div class="jar-card jar-expenses jar-full">
@@ -646,7 +791,7 @@ function buildPanelHTML(mi) {
 }
 
 // ── STORAGE KEY ─────────────────────────────────────────────
-const STORE_KEY = `wealth_code_${currentYear}`;
+const STORE_KEY = `wealthcode_${currentYear}`;
 
 function saveAll() {
   const data = {};
