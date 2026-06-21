@@ -168,7 +168,7 @@
     <h2>Connection setup</h2>
     <p class="sub">One-time: paste your Dues Tracker Apps Script Web App URL.</p>
     <label for="scriptUrl">Apps Script Web App URL</label>
-    <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/.../exec" value="https://script.google.com/macros/s/AKfycbzrS39yUL_zmi99UWzd1x0umc4GsqPspclRS-ynuwMI242OR_2PElnlxljNeVBARz0mQQ/exec">
+    <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/.../exec" value="https://script.google.com/macros/s/AKfycby9zfuuUJ_owt0PxZwXg7AvngDu7U3EHMD8mLtS-jBKIrYlmk3Yi6krLrEdgJ8CXadvSQ/exec">
     <div class="row">
       <button class="btn-ghost" id="saveScriptUrl">SAVE URL</button>
     </div>
@@ -217,7 +217,7 @@
 /* ============================================================
    CONFIG — paste your deployed Apps Script Web App URL below
    ============================================================ */
-const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrS39yUL_zmi99UWzd1x0umc4GsqPspclRS-ynuwMI242OR_2PElnlxljNeVBARz0mQQ/exec';
+const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9zfuuUJ_owt0PxZwXg7AvngDu7U3EHMD8mLtS-jBKIrYlmk3Yi6krLrEdgJ8CXadvSQ/exec';
 
 function getScriptUrl(){
   return document.getElementById('scriptUrl').dataset.value || DEFAULT_SCRIPT_URL;
